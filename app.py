@@ -308,7 +308,7 @@ elif page == "Segmentation":
     st.info("💡 **Recommandations** : Adapter les campagnes marketing par segment pour maximiser le ROI.")
 
 # ============================================
-# PAGE PREVISIONS (CORRIGÉE)
+# PAGE PREVISIONS (CORRIGÉE - ERREUR DIMENSIONS FIXÉE)
 # ============================================
 elif page == "Previsions":
     st.header("📅 Time Series - Prévisions des ventes B2C")
@@ -331,15 +331,27 @@ elif page == "Previsions":
     st.markdown("---")
     st.subheader("📈 Prévisions des ventes - 3 mois")
     
-    # Correction : 'ME' au lieu de 'M' (important !)
-    dates = pd.date_range('2024-01-01', '2025-03-31', freq='ME')
+    # Création des données de prévisions
+    dates_historique = pd.date_range('2024-01-01', '2025-03-01', freq='MS')
+    dates_previsions = pd.date_range('2025-04-01', '2025-06-01', freq='MS')
+    
     historique = [2100, 2300, 2500, 2800, 3000, 3500, 3800, 3600, 3300, 2900, 2600, 2400, 2500, 2700, 2900]
     previsions = [3100, 3300, 3500]
     
     fig, ax = plt.subplots(figsize=(12, 6))
-    ax.plot(dates[:len(historique)], historique, 'b-o', label='Historique', linewidth=2, markersize=6)
-    ax.plot(dates[len(historique):], previsions, 'r-s', label='Prévisions', linewidth=2, markersize=8)
-    ax.fill_between(dates[len(historique):], [p-200 for p in previsions], [p+200 for p in previsions], alpha=0.2, color='red')
+    
+    # Tracer l'historique
+    ax.plot(dates_historique, historique, 'b-o', label='Historique', linewidth=2, markersize=6)
+    
+    # Tracer les prévisions (3 points seulement)
+    ax.plot(dates_previsions, previsions, 'r-s', label='Prévisions', linewidth=2, markersize=8)
+    
+    # Ajouter la zone de confiance
+    ax.fill_between(dates_previsions, 
+                    [p-200 for p in previsions], 
+                    [p+200 for p in previsions], 
+                    alpha=0.2, color='red')
+    
     ax.set_xlabel('Date')
     ax.set_ylabel('Ventes (TND)')
     ax.set_title('Prévisions des ventes B2C - 3 mois')
@@ -396,7 +408,7 @@ elif page == "Fournisseurs":
     fig, ax = plt.subplots(figsize=(12, 6))
     depenses = fournisseurs_data['Dépense (TND)'].values
     cumsum = np.cumsum(depenses) / depenses.sum() * 100
-    bars = ax.bar(range(len(depenses)), depenses, alpha=0.7, color='steelblue', label='Dépense par fournisseur')
+    ax.bar(range(len(depenses)), depenses, alpha=0.7, color='steelblue', label='Dépense par fournisseur')
     ax.plot(range(len(depenses)), cumsum, 'r-o', linewidth=2, label='Pourcentage cumulé')
     ax.axhline(y=80, color='green', linestyle='--', label='80% des achats')
     ax.set_xlabel('Fournisseurs')
@@ -410,7 +422,7 @@ elif page == "Fournisseurs":
     st.success("💡 **Recommandations** : Négocier avec les top 3 fournisseurs et diversifier les sources.")
 
 # ============================================
-# PAGE SYNTHESE (CORRIGÉE)
+# PAGE SYNTHESE
 # ============================================
 elif page == "Synthese":
     st.header("📋 Synthèse des résultats")
