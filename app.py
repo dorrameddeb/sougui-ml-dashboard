@@ -410,7 +410,7 @@ elif page == "Fournisseurs":
     st.success("💡 **Recommandations** : Négocier avec les top 3 fournisseurs et diversifier les sources.")
 
 # ============================================
-# PAGE SYNTHESE
+# PAGE SYNTHESE (CORRIGÉE)
 # ============================================
 elif page == "Synthese":
     st.header("📋 Synthèse des résultats")
@@ -450,7 +450,7 @@ elif page == "Synthese":
     col1, col2, col3 = st.columns(3)
     with col1:
         st.metric("Chiffre d'affaires total", "125 000 TND", "+15%")
-        st.metric("Nombre de commandes", "1 374", "+8%)
+        st.metric("Nombre de commandes", "1 374", "+8%")
     with col2:
         st.metric("Panier moyen", "98 TND", "+5 TND")
         st.metric("Taux de fidélisation", "72%", "+3%")
