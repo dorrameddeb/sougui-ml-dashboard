@@ -151,7 +151,7 @@ elif page == "Segmentation":
 elif page == "Previsions":
     st.header("📅 Prévisions des ventes B2C")
     
-    dates = pd.date_range('2024-01-01', '2025-03-31', freq='M')
+    dates = pd.date_range('2024-01-01', '2025-03-31', freq='ME')
     historique = [2100, 2300, 2500, 2800, 3000, 3500, 3800, 3600, 3300, 2900, 2600, 2400, 2500, 2700, 2900]
     previsions = [3100, 3300, 3500]
     
